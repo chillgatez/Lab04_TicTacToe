@@ -4,17 +4,22 @@ using System.Text;
 
 namespace Lab04_TicTacToe.Classes
 {
-    class Board
+    public class Board
     {
         /// <summary>
         /// Tic Tac Toe Gameboard states
         /// </summary>
-        public string[,] Board = new string[,]
+        public string[,] GameBoard { get; set; }
+
+        public Board()
         {
-            {"1", "2", "3"},
-            {"4", "5", "6"},
-            {"7", "8", "9"},
-        };
+            GameBoard = new string[,]
+            {
+                {"1", "2", "3"},
+                {"4", "5", "6"},
+                {"7", "8", "9"},
+            };
+        }
 
         /// <summary>
         /// Display the Game Board
@@ -23,9 +28,9 @@ namespace Lab04_TicTacToe.Classes
         {
 
             //TODO: Output the board to the console
-            Console.WriteLine("|{0}||{1}||{2}|", Board[0][0], Board[0][1], Board[0][2]);
-            Console.WriteLine("|{0}||{1}||{2}|", Board[1][0], Board[1][1], Board[1][2]);
-            Console.WriteLine("|{0}||{1}||{2}|", Board[2][0], Board[2][1], Board[2][2]);
+            Console.WriteLine("|{0}||{1}||{2}|", GameBoard[0, 0], GameBoard[0, 1], GameBoard[0, 2]);
+            Console.WriteLine("|{0}||{1}||{2}|", GameBoard[1, 0], GameBoard[1, 1], GameBoard[1, 2]);
+            Console.WriteLine("|{0}||{1}||{2}|", GameBoard[2, 0], GameBoard[2, 1], GameBoard[2, 2]);
         }
     }
 }

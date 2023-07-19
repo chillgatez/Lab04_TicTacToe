@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Numerics;
-using System.Text;
 
 namespace Lab04_TicTacToe.Classes
 {
@@ -11,7 +8,6 @@ namespace Lab04_TicTacToe.Classes
         public Player PlayerTwo { get; set; }
         public Player Winner { get; set; }
         public Board Board { get; set; }
-
 
         /// <summary>
         /// Require 2 players and a board to start a game. 
@@ -31,32 +27,16 @@ namespace Lab04_TicTacToe.Classes
         /// <returns>Winner</returns>
         public Player Play()
         {
-
-            //TODO: Complete this method and utilize the rest of the class structure to play the game.
-
-            /*
-             * Complete this method by constructing the logic for the actual playing of Tic Tac Toe. 
-             * 
-             * A few things to get you started:
-            1. A turn consists of a player picking a position on the board with their designated marker. 
-            2. Display the board after every turn to show the most up to date state of the game
-            3. Once a Winner is determined, display the board one final time and return a winner
-
-            Few additional hints:
-                Be sure to keep track of the number of turns that have been taken to determine if a draw is required
-                and make sure that the game continues while there are unmarked spots on the board. 
-
-            Use any and all pre-existing methods in this program to help construct the method logic. 
-             */
-
             Player currentPlayer = PlayerOne;
 
             // Game loop until a winner is determined or the board is full (draw).
             while (!CheckForWinner(Board) && !IsBoardFull())
             {
-
+                // Player takes their turn and the board is displayed.
                 currentPlayer.TakeTurn(Board);
                 Board.DisplayBoard();
+
+                // Switch to the next player.
                 currentPlayer = (currentPlayer == PlayerOne) ? PlayerTwo : PlayerOne;
             }
 
@@ -74,7 +54,6 @@ namespace Lab04_TicTacToe.Classes
             return Winner;
         }
 
-
         /// <summary>
         /// Check if winner exists
         /// </summary>
@@ -84,39 +63,38 @@ namespace Lab04_TicTacToe.Classes
         {
             int[][] winners = new int[][]
             {
-                new[] {1,2,3}, // Top row
-                new[] {4,5,6}, // Middle row
-                new[] {7,8,9}, // Bottom row
+                new[] {1,2,3},
+                new[] {4,5,6},
+                new[] {7,8,9},
 
-                new[] {1,4,7}, // Left column
-                new[] {2,5,8}, // Middle column
-                new[] {3,6,9}, // Right column
+                new[] {1,4,7},
+                new[] {2,5,8},
+                new[] {3,6,9},
 
-                new[] {1,5,9}, // Diagonal from top-left to bottom-right
+                new[] {1,5,9},
                 new[] {3,5,7}
             };
 
-            // Given all the winning conditions, Determine the winning logic. 
+            // Given all the winning conditions, determine the winning logic. 
             for (int i = 0; i < winners.Length; i++)
             {
-                Position p1 = Player.PositionForNumber(winners[i][0]);
-                Position p2 = Player.PositionForNumber(winners[i][1]);
-                Position p3 = Player.PositionForNumber(winners[i][2]);
+                Position p1 = Position.PositionForNumber(winners[i][0]);
+                Position p2 = Position.PositionForNumber(winners[i][1]);
+                Position p3 = Position.PositionForNumber(winners[i][2]);
 
-                string a = board.Board[p1.Row, p1.Column];
-                string b = board.Board[p2.Row, p2.Column];
-                string c = board.Board[p3.Row, p3.Column];
+                string a = board.GameBoard[p1.Row, p1.Column];
+                string b = board.GameBoard[p2.Row, p2.Column];
+                string c = board.GameBoard[p3.Row, p3.Column];
 
-                // TODO:  Determine a winner has been reached. 
-                // return true if a winner has been reached. 
-
-                if (a == b && b == c && !string.IsNullOrEmpty(a) && !string)
-
+                // Determine if a winner has been reached.
+                if (a == b && b == c && !string.IsNullOrEmpty(a) && !string.IsNullOrEmpty(b) && !string.IsNullOrEmpty(c))
+                {
+                    return true;
+                }
             }
 
             return false;
         }
-
 
         /// <summary>
         /// Determine next player
@@ -128,16 +106,13 @@ namespace Lab04_TicTacToe.Classes
         }
 
         /// <summary>
-        /// End one players turn and activate the other
+        /// End one player's turn and activate the other
         /// </summary>
         public void SwitchPlayer()
         {
             if (PlayerOne.IsTurn)
             {
-
                 PlayerOne.IsTurn = false;
-
-
                 PlayerTwo.IsTurn = true;
             }
             else
@@ -147,6 +122,44 @@ namespace Lab04_TicTacToe.Classes
             }
         }
 
+        /// <summary>
+        /// Check if the board is full (draw).
+        /// </summary>
+        /// <returns>True if the board is full, false otherwise.</returns>
+        public bool IsBoardFull()
+        {
+            for (int row = 0; row < 3; row++)
+            {
+                for (int col = 0; col < 3; col++)
+                {
+                    if (string.IsNullOrEmpty(Board.GameBoard[row, col]))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
 
+        /// <summary>
+        /// Get the winner of the game if one exists.
+        /// </summary>
+        /// <returns>The winning player if there is one, null otherwise.</returns>
+        public Player GetWinner()
+        {
+            if (CheckForWinner(Board))
+            {
+                return (PlayerOne.Marker == Board.GameBoard[0, 0] ||
+                        PlayerOne.Marker == Board.GameBoard[0, 1] ||
+                        PlayerOne.Marker == Board.GameBoard[0, 2] ||
+                        PlayerOne.Marker == Board.GameBoard[1, 0] ||
+                        PlayerOne.Marker == Board.GameBoard[1, 1] ||
+                        PlayerOne.Marker == Board.GameBoard[1, 2] ||
+                        PlayerOne.Marker == Board.GameBoard[2, 0] ||
+                        PlayerOne.Marker == Board.GameBoard[2, 1] ||
+                        PlayerOne.Marker == Board.GameBoard[2, 2]) ? PlayerOne : PlayerTwo;
+            }
+            return null;
+        }
     }
 }
