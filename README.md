@@ -7,7 +7,7 @@ This is a simple command-line TicTacToe game built in C#. The game allows two pl
 ## Visuals
 
 Here's a brief demonstration of how the game looks in action:
-
+![gameplay screenshot](https://github.com/chillgatez/Lab04_TicTacToe/blob/master/Screenshot%20(28).png?raw=true)
 
 
 ## How to Play
