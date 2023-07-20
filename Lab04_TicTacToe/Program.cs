@@ -9,6 +9,38 @@
             Name = name;
             Marker = marker;
         }
+        public static string WinnerOfTheGame(string[][] board)
+        {
+            //check for win in rows
+            for (int row = 0; row < 3; row++)
+            {
+                if (board[row][0] == board[row][1] && board[row][1] == board[row][2] && board[row][0] != "")
+                {
+                    return board[row][0];
+                }
+            }
+
+            //check for win in colums
+            for (int col = 0; col < 3; col++)
+            {
+                if (board[0][col] == board[1][col] && board[1][col] == board[2][col] && board[0][col] != "")
+                {
+                    return board[0][col];
+                }
+            }
+
+            // Check for a win in diagonals
+            if (board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[0][0] != "")
+            {
+                return board[0][0];
+            }
+            if (board[0][2] == board[1][1] && board[1][1] == board[2][0] && board[0][2] != "")
+            {
+                return board[0][2];
+            }
+
+            return "";
+        }
     }
     public static class Program
     {
@@ -51,7 +83,7 @@
                 {
                     continue;
                 }
-                winner = WinnerOfTheGame();
+                winner = Player.WinnerOfTheGame(Board);
                 if (winner == "X" || winner == "O")
                 {
                     Console.WriteLine("Congrats, {0} has won the game!", (winner == player1.Marker ? player1.Name : player2.Name));
@@ -135,14 +167,5 @@
             return isValid;
         }
 
-
-
-
-
-
-
-
-
-
-
-
+    }
+}
